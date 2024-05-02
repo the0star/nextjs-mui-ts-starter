@@ -4,13 +4,17 @@ This is a [Next.js](https://nextjs.org/) project bootstrapped using [`create-nex
 
 ## How to use
 
-Download the example [or clone the repo](https://github.com/mui/material-ui):
+Download the example or clone the repo:
 
 <!-- #default-branch-switch -->
-
+<!--
 ```bash
 curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip=2  material-ui-master/examples/material-ui-nextjs-ts
 cd material-ui-nextjs-ts
+```
+-->
+```bash
+https://github.com/the0star/nextjs-ts-mui-starter.git
 ```
 
 Install it and run:
@@ -21,14 +25,6 @@ npm run dev
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
-
-or:
-
-<!-- #default-branch-switch -->
-
-[![Edit on StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/mui/material-ui/tree/master/examples/material-ui-nextjs-ts)
-
-[![Edit on CodeSandbox](https://codesandbox.io/static/img/play-codesandbox.svg)](https://codesandbox.io/p/sandbox/github/mui/material-ui/tree/master/examples/material-ui-nextjs-ts)
 
 ## Learn more
 
