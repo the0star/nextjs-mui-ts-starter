@@ -2,8 +2,10 @@ import * as React from 'react';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v14-appRouter';
 import { cookies } from 'next/headers'
 
+import { Box, Container } from '@mui/material';
+
 import ThemeProvider from '@/theme/ThemeProvider';
-import MyApp from '@/components/AppBar'
+import AppBar from '@/components/AppBar'
 
 
 export default function RootLayout(props: { children: React.ReactNode }) {
@@ -15,8 +17,18 @@ export default function RootLayout(props: { children: React.ReactNode }) {
       <body>
         <AppRouterCacheProvider>
           <ThemeProvider value={theme}>
-            <MyApp />
-            {props.children}
+            <AppBar />
+            <Container maxWidth="lg">
+              <Box
+                sx={{
+                  my: 4,
+                  display: 'flex',
+                  flexDirection: 'column',
+                }}
+              >
+                {props.children}
+              </Box>
+            </Container>
           </ThemeProvider>
         </AppRouterCacheProvider>
       </body>

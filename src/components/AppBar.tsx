@@ -1,79 +1,53 @@
-'use client'
-import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
+import Link from 'next/link'
 import {
   AppBar,
   Box,
   Button,
-  Container,
-  IconButton,
   Toolbar,
-  Tooltip,
   Typography,
-  useTheme,
 } from "@mui/material";
-import { useContext, useMemo } from "react";
-import { ColorModeContext } from "@/theme/ThemeProvider";
-import Cookies from 'js-cookie';
+
+import { createClient } from '@/utils/supabase/server'
+import LightSwitch from '@/components/LightSwitch'
 
 
-function App() {
-  const theme = useTheme();
-  const { toggleColorMode } = useContext(ColorModeContext);
-
-  function onToggle() {
-    const t = theme.palette.mode === "dark" ? "light" : "dark";
-    Cookies.set('utheme', t);
-    toggleColorMode();
-    return;
-  }
-
-  const activateName = useMemo(
-    () => (theme.palette.mode === "dark" ? "Light" : "Dark"),
-    [theme]
-  );
+async function App() {
+  const supabase = createClient();
+  const { data } = await supabase.auth.getSession();
 
   return (
-    <>
-      <Container
-        maxWidth={false}
-        sx={{
-          padding: "0px !important",
-        }}
-      >
-        <AppBar
-          position="static"
-          sx={{
-            padding: "0px !important",
-            bgcolor: theme.palette.background.default,
-          }}
-        >
-          <Toolbar>
-            <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-              TITLE
-            </Typography>
-            <Button color="inherit">Login</Button>
-            <Tooltip title={`Activate ${activateName} Mode`}>
-              <IconButton
-                onClick={onToggle}
-                sx={{
-                  p: 1,
-                  border: `1px ${theme.palette.text.disabled} solid`,
-                }}
-                size="large"
-                color="inherit"
-              >
-                {theme.palette.mode === "dark" ? (
-                  <LightModeOutlined />
-                ) : (
-                  <DarkModeOutlined color="action" />
-                )}
-              </IconButton>
-            </Tooltip>
-
-          </Toolbar>
-        </AppBar>
-      </Container>
-    </>
+    <AppBar position="static">
+      <Toolbar>
+        <Typography variant="h6">
+          TITLE
+        </Typography>
+        <Box sx={{ flexGrow: 1 }}>
+          <Link href="/" passHref>
+            <Button sx={{ color: '#fff' }}>Home</Button>
+          </Link>
+          <Link href="/about" passHref>
+            <Button sx={{ color: '#fff' }}>About</Button>
+          </Link>
+        </Box>
+        {data?.session ? (
+          <>
+            <Link href="/account" passHref>
+              <Button sx={{ color: '#fff' }}>Account</Button>
+            </Link>
+            <form action="/auth/signout" method="post">
+              <Button sx={{ color: '#fff' }} type="submit">
+                Sign out
+              </Button>
+            </form>
+          </>
+        ) : (
+          <Link href="/login" passHref>
+            <Button sx={{ color: '#fff' }}>Login</Button>
+          </Link>
+        )}
+        <LightSwitch />
+      </Toolbar>
+    </AppBar>
   );
 }
 
