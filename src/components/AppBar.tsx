@@ -11,15 +11,18 @@ import {
   Typography,
   useTheme,
 } from "@mui/material";
-import { useContext, useState, useEffect, useMemo } from "react";
+import { useContext, useMemo } from "react";
 import { ColorModeContext } from "@/theme/ThemeProvider";
+import Cookies from 'js-cookie';
+
 
 function App() {
   const theme = useTheme();
   const { toggleColorMode } = useContext(ColorModeContext);
 
   function onToggle() {
-    window.localStorage.setItem('utheme', theme.palette.mode === "dark" ? "light" : "dark");
+    const t = theme.palette.mode === "dark" ? "light" : "dark";
+    Cookies.set('utheme', t);
     toggleColorMode();
     return;
   }
