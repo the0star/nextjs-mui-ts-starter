@@ -17,6 +17,8 @@ cd material-ui-nextjs-ts
 https://github.com/the0star/nextjs-ts-mui-starter.git
 ```
 
+Complete database-related setups: https://supabase.com/docs/guides/getting-started/tutorials/with-nextjs
+
 Install it and run:
 
 ```bash
