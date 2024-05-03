@@ -1,4 +1,4 @@
-'use client'
+"use client";
 import { DarkModeOutlined, LightModeOutlined } from "@mui/icons-material";
 import {
   AppBar,
@@ -13,8 +13,7 @@ import {
 } from "@mui/material";
 import { useContext, useMemo } from "react";
 import { ColorModeContext } from "@/theme/ThemeProvider";
-import Cookies from 'js-cookie';
-
+import Cookies from "js-cookie";
 
 function App() {
   const theme = useTheme();
@@ -22,21 +21,25 @@ function App() {
 
   function onToggle() {
     const t = theme.palette.mode === "dark" ? "light" : "dark";
-    Cookies.set('utheme', t);
+    Cookies.set("utheme", t);
     toggleColorMode();
     return;
   }
 
   const activateName = useMemo(
     () => (theme.palette.mode === "dark" ? "Light" : "Dark"),
-    [theme]
+    [theme],
   );
 
   return (
     <>
       <Tooltip title={`Activate ${activateName} Mode`}>
         <IconButton sx={{ ml: 1 }} onClick={onToggle} color="inherit">
-          {theme.palette.mode === 'dark' ? <LightModeOutlined /> : <DarkModeOutlined />}
+          {theme.palette.mode === "dark" ? (
+            <LightModeOutlined />
+          ) : (
+            <DarkModeOutlined />
+          )}
         </IconButton>
       </Tooltip>
     </>

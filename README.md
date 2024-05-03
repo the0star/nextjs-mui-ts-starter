@@ -13,6 +13,7 @@ curl https://codeload.github.com/mui/material-ui/tar.gz/master | tar -xz --strip
 cd material-ui-nextjs-ts
 ```
 -->
+
 ```bash
 https://github.com/the0star/nextjs-ts-mui-starter.git
 ```
