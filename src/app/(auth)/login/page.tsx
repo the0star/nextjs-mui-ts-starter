@@ -83,7 +83,7 @@ export default function LoginView({
         <Typography variant="h4">Login</Typography>
 
         <Typography variant="body2" sx={{ mt: 2, mb: 3 }}>
-          Don’t have an account? <Link href="/signup">Get started</Link>
+          Don’t have an account? <Link href="/signup">Sign up</Link>
         </Typography>
 
         {renderForm}

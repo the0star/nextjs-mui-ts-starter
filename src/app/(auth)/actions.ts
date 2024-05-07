@@ -2,45 +2,58 @@
 
 import { revalidatePath } from "next/cache";
 import { redirect } from "next/navigation";
-
+import { z } from "zod";
 import { createClient } from "@/utils/supabase/server";
+
+const formSchema = z.object({
+  email: z.string().email(),
+  password: z.string().min(8),
+});
 
 export async function login(formData: FormData) {
   const supabase = createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+  const parsedCredentials = formSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
 
-  const { error } = await supabase.auth.signInWithPassword(data);
+  if (parsedCredentials.success) {
+    const { error } = await supabase.auth.signInWithPassword(
+      parsedCredentials.data,
+    );
 
-  if (error) {
-    return redirect("/login?message=" + error.message);
+    if (error) {
+      return redirect("/login?message=" + error.message);
+    }
+
+    revalidatePath("/", "layout");
+    return redirect("/account");
   }
 
-  revalidatePath("/", "layout");
-  redirect("/account");
+  return redirect("/login?message=Invalid credentials");
 }
 
 export async function signup(formData: FormData) {
   const supabase = createClient();
 
-  // type-casting here for convenience
-  // in practice, you should validate your inputs
-  const data = {
-    email: formData.get("email") as string,
-    password: formData.get("password") as string,
-  };
+  const parsedCredentials = formSchema.safeParse({
+    email: formData.get("email"),
+    password: formData.get("password"),
+  });
 
-  const { error } = await supabase.auth.signUp(data);
+  if (parsedCredentials.success) {
+    const { error } = await supabase.auth.signUp(parsedCredentials.data);
 
-  if (error) {
-    return redirect("/signup?message=" + error.message);
+    if (error) {
+      return redirect("/signup?message=" + error.message);
+    }
+
+    revalidatePath("/", "layout");
+    return redirect("/login");
   }
 
-  revalidatePath("/", "layout");
-  redirect("/login");
+  return redirect(
+    "/signup?message=" + parsedCredentials.error.issues[0].message,
+  );
 }
